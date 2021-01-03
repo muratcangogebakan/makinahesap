@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.scientificcalculator">
+    private InstallReferrerStateListener installReferrerStateListener = new InstallReferrerStateListener() {
+    @Override
+    public void onInstallReferrerSetupFinished(int responseCode) {
+    switch (responseCode) {
+    case InstallReferrerClient.InstallReferrerResponse.OK:
+    Log.i(TAG, "connect ads kit ok");
+    // Get results
+    try {
+    ReferrerDetails referrerDetails = mReferrerClient.getInstallReferrer();
+    } catch (RemoteException e) {
+    Log.i(TAG, "getInstallReferrer RemoteException: " + e.getMessage());
+    } catch (IOException e) {
+    Log.i(TAG, "getInstallReferrer IOException: " + e.getMessage());
+    }
+    break;
+    case InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
+    Log.i(TAG, "FEATURE_NOT_SUPPORTED");
+    break;
+    case InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
+    Log.i(TAG, "SERVICE_UNAVAILABLE");
+    break;
+    default:
+    Log.i(TAG, "responseCode: " + responseCode);
+    break;
+    }
+    }
+    @Override
+    public void onInstallReferrerServiceDisconnected() {
+    Log.i(TAG, "onInstallReferrerServiceDisconnected");
+    }
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
